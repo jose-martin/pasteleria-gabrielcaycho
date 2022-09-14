@@ -1,0 +1,16 @@
+{
+  "bocaditos": [
+    {
+      "id": 1,
+      "name": "Bocadito de Matrimonio",
+      "precio": 2,
+      "imagen": "./assest/bocadito3.webp"
+    },
+    {
+      "id": 2,
+      "name": "Bocaditos dulces variados",
+      "precio": 0.8,
+      "imagen": "./assest/bocadito4.jpg"
+    }
+  ]
+}

@@ -1,0 +1,148 @@
+.navbar {
+    height: 80px;
+}
+
+
+.buscar {
+    display: flex;
+    margin-left: 20px;
+    position: relative;
+}
+
+.buscar svg {
+    position: absolute;
+    color: white;
+    vertical-align: middle;
+    left: auto;
+    right: 0.5rem;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    cursor: pointer;
+
+}
+
+.buscar input {
+    margin: none;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid white;
+    background: transparent;
+    color: white;
+    vertical-align: middle;
+    padding-right: 2rem;
+}
+
+.container-nav {
+    padding: 1rem 2rem;
+    margin-top: 80px;
+    background-color: #e00000;
+    z-index: 10;
+    position: sticky;
+    top: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-titulo {
+    padding: 0;
+    color: aliceblue;
+    text-align: center;
+}
+
+
+.nav-titulo h1 {
+    text-align: center;
+    font-weight: 600;
+
+}
+
+.container-nav a {
+    position: relative;
+    width: 2rem;
+    height: 2rem;
+}
+
+.container-nav a .carrito-cantidad {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    right: -15%;
+    top: -25%;
+}
+
+.container-nav a .carrito-cantidad p {
+    font-size: 10px;
+    line-height: 10px;
+    margin: 0;
+    font-weight: bold;
+    color: white;
+}
+
+.container-nav a svg {
+    color: white;
+    fill: white;
+    width: 2rem;
+    height: 2rem;
+}
+
+.contenedor-0 {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 5rem;
+}
+
+.contenedor1 {
+    margin-top: 5rem;
+}
+
+.contenedor1 img {
+    height: 250px;
+    width: 350px;
+}
+
+.contenedor-descripcion {
+    height: auto;
+    width: auto;
+    border: black solid 1px;
+    padding: 5rem 2rem;
+}
+
+.contenedor-descripcion p {
+    margin-top: 3rem;
+}
+
+.contenedor-descri {
+    border-bottom: 1px solid black;
+
+}
+
+.contenedor-mini {
+    margin-top: 2rem;
+    border-bottom: black solid 1px;
+}
+
+.contadores {
+    display: flex;
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.contador input {
+    height: 50px;
+    width: 70px;
+}
+
+.boton button {
+
+    padding: 0.5rem 3rem;
+    color: white;
+    background-color: #e00000;
+
+}
