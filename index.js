@@ -57,7 +57,7 @@ function mostrarBocaditos() {
           <img src="urlBocadito" alt="" />
           <button
             type="button"
-            onclick="funcionBocadito"
+            onclick="verDetalleProducto(idProducto,tipo)"
             data-bs-toggle="modal"
             data-bs-target="#modalProducto"
           >
@@ -74,8 +74,12 @@ function mostrarBocaditos() {
     bocaditoAux = bocaditoAux.replace("urlBocadito", bocadito.imagen);
     bocaditoAux = bocaditoAux.replace("nombreBocadito", bocadito.name);
     bocaditoAux = bocaditoAux.replace(
-      "funcionBocadito",
-      `verDetalleProducto(${bocadito.id})`
+      "idProducto",
+      bocadito.id
+    );
+    bocaditoAux = bocaditoAux.replace(
+      "tipo",
+      `'B'`
     );
     bocaditoAux = bocaditoAux.replace(
       "precioBocadito",
@@ -88,6 +92,13 @@ function mostrarBocaditos() {
 }
 
 mostrarBocaditos();
+
+// Evento para cerrar el carrito
+document.addEventListener("keyup", (event) => {
+  if (event.key === "Escape") {
+    cerrarCarrito()
+  }
+})
 
 function obtenerCarritoHtml() {
   return document.getElementById("carrito");
@@ -114,18 +125,16 @@ function cerrarCarrito() {
   carrito.className = "carrito";
 }
 
-function verDetalleProducto(idProducto) {
+function verDetalleProducto(idProducto, tipo = "B") {
   const titleModal = document.getElementById("modalProductoLabel");
   const bodyModal = document.getElementById("modalProductoBody");
-
-  const bocadito = bocaditos.find((x) => x.id === idProducto);
 
   const plantillaHtml = `<div class="contenedor-modal-body">
                           <img src="imagenProducto" />
                           <div class="contenedor-modal-descripcion">
                             <div class="contenedor-modal-opciones">
                               <span>Precio S/precioProducto</span>
-                              <button onclick="agregarAlCarrito(idProducto)">Agregar al Carrito</button>
+                              <button onclick="agregarAlCarrito(idProducto,tipo)">Agregar al Carrito</button>
                             </div>
                             <p>
                               descripcionProducto
@@ -133,12 +142,20 @@ function verDetalleProducto(idProducto) {
                           </div>
                         </div>`;
 
-  titleModal.innerHTML = bocadito.name;
-  bodyModal.innerHTML = plantillaHtml
-    .replace("imagenProducto", bocadito.imagen)
-    .replace("precioProducto", bocadito.precio.toFixed(2))
-    .replace("idProducto", bocadito.id)
-    .replace("descripcionProducto", bocadito.descripcion);
+
+  if (tipo === "B") {
+    const bocadito = bocaditos.find((x) => x.id === idProducto);
+    titleModal.innerHTML = bocadito.name;
+    bodyModal.innerHTML = plantillaHtml
+      .replace("imagenProducto", bocadito.imagen)
+      .replace("precioProducto", bocadito.precio.toFixed(2))
+      .replace("idProducto", bocadito.id)
+      .replace("tipo", `'${tipo}'`)
+      .replace("descripcionProducto", bocadito.descripcion);
+  } else if (tipo == "T") {
+    // PONER ACA PARA TORTAS
+  }
+
 }
 
 function obtenerCarrito() {
@@ -160,29 +177,98 @@ function validarCarrito(carritoObj) {
     (a, b) => a + b.cantidad,
     0
   );
-
   // Mostrar aca los items del carrito
+  const itemsCarrito = document.getElementById("itemCarrito");
+  const totalCarrito = document.getElementById("totalCarrito");
+  itemsCarrito.innerHTML = ""
+  let div = document.createElement("div");
+  const items = []
+
+  const template = `<div class="carrito-body-titles">
+    <div class="carrito-item-imagen">
+      <img src="imagenSrc" />
+    </div>
+    <div class="carrito-item-detalle">
+      <div class="carrito-item-descripcion">
+        <span>Items</span>
+        <span>Cantidad</span>
+      </div>
+      <span onclick="eliminarItem(idProducto)" class="eliminarItem">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-x"
+          viewBox="0 0 16 16">
+          <path fill-rule="evenodd"
+            d="M6.146 8.146a.5.5 0 0 1 .708 0L8 9.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 10l1.147 1.146a.5.5 0 0 1-.708.708L8 10.707l-1.146 1.147a.5.5 0 0 1-.708-.708L7.293 10 6.146 8.854a.5.5 0 0 1 0-.708z" />
+          <path
+            d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
+        </svg>
+      </span>
+    </div>
+  </div>`;
+
+  for (const producto of carrito.productos) {
+    let item = template;
+    item = item
+      .replace('imagenSrc', producto.imagen)
+      .replace('Items', producto.name)
+      .replace('Cantidad', producto.cantidad)
+      .replace('idProducto', producto.id)
+    items.push(item)
+  }
+
+  div.innerHTML = items.join('')
+  totalCarrito.innerText = carrito.total.toFixed(2)
+  itemsCarrito.append(div);
 }
 
 validarCarrito();
 
-function agregarAlCarrito(idProducto) {
+function agregarAlCarrito(idProducto, tipo = "B") {
   const carrito = obtenerCarrito();
-  const bocadito = bocaditos.find((x) => x.id === idProducto);
-
-  const existeBocadito = carrito.productos.find((x) => x.id === bocadito.id);
-  if (existeBocadito) {
-    existeBocadito.cantidad += 1;
-  } else {
-    carrito.productos.push({
-      id: bocadito.id,
-      name: bocadito.name,
-      cantidad: 1,
-      precio: bocadito.precio,
-      imagen: bocadito.imagen,
-    });
+  if (tipo === "B") {
+    const bocadito = bocaditos.find((x) => x.id == idProducto);
+    const existeBocadito = carrito.productos.find((x) => x.id == bocadito.id);
+    if (existeBocadito) {
+      existeBocadito.cantidad += 1;
+    } else {
+      carrito.productos.push({
+        id: bocadito.id,
+        name: bocadito.name,
+        cantidad: 1,
+        precio: bocadito.precio,
+        imagen: bocadito.imagen,
+      });
+    }
+  } else if (tipo === "T") {
+    const torta = tortas.find((x) => x.id == idProducto);
+    const existetorta = carrito.productos.find((x) => x.id == torta.id);
+    if (existetorta) {
+      existetorta.cantidad += 1;
+    } else {
+      carrito.productos.push({
+        id: torta.id,
+        name: torta.name,
+        cantidad: 1,
+        precio: torta.precio,
+        imagen: torta.imagen,
+      });
+    }
+  }
+  carrito.total = 0
+  for (const producto of carrito.productos) {
+    carrito.total += producto.precio * producto.cantidad;
   }
 
+  localStorage.setItem(claveLocalStorage, JSON.stringify(carrito));
+  validarCarrito(carrito);
+}
+
+function eliminarItem(idProducto) {
+
+  const carrito = obtenerCarrito();
+  if (!carrito.productos || carrito.productos.length === 0) return;
+
+  carrito.productos = carrito.productos.filter(x => x.id != idProducto)
+  carrito.total = 0
   for (const producto of carrito.productos) {
     carrito.total += producto.precio * producto.cantidad;
   }

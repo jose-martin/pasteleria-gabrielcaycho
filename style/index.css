@@ -148,6 +148,7 @@
   display: flex;
   flex-direction: column;
 }
+
 .contenedor-bocaditos1 .contenedor-bocaditos-imagen button {
   border: none;
   background-color: red;
@@ -232,6 +233,40 @@
   height: calc(100% - 112px);
 }
 
+.carrito-body-titles {
+  display: flex;
+  padding: 0.5rem 0.5rem;
+  gap: 0.25rem;
+}
+
+.carrito-item-imagen {
+  height: 70px;
+  width: 70px;
+}
+
+.carrito-item-imagen img {
+  height: 70px;
+  width: 70px;
+}
+
+.carrito-item-detalle {
+  display: flex;
+  flex: 1;
+  align-items: center;
+}
+
+.carrito-item-descripcion {
+  height: 100%;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.carrito-body .eliminarItem {
+  cursor: pointer;
+}
+
 .carrito-footer {
   display: flex;
   padding: 1rem 1rem;
@@ -246,33 +281,29 @@
 .contenedor-modal-body {
   width: 100%;
 }
+
 .contenedor-modal-body img {
   width: 100%;
   height: 520px;
   object-fit: cover;
 }
+
 .contenedor-modal-body .contenedor-modal-descripcion {
   margin-top: 1rem;
 }
-.contenedor-modal-body
-  .contenedor-modal-descripcion
-  .contenedor-modal-opciones {
+
+.contenedor-modal-body .contenedor-modal-descripcion .contenedor-modal-opciones {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.contenedor-modal-body
-  .contenedor-modal-descripcion
-  .contenedor-modal-opciones
-  span,
+.contenedor-modal-body .contenedor-modal-descripcion .contenedor-modal-opciones span,
 button {
   font-weight: bold;
 }
-.contenedor-modal-body
-  .contenedor-modal-descripcion
-  .contenedor-modal-opciones
-  button {
+
+.contenedor-modal-body .contenedor-modal-descripcion .contenedor-modal-opciones button {
   border: none;
   color: white;
   background-color: red;
