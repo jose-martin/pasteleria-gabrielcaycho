@@ -95,10 +95,65 @@ mostrarBocaditos();
 
 // Evento para cerrar el carrito
 document.addEventListener("keyup", (event) => {
+
   if (event.key === "Escape") {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: '¡¡¡Ud. cerro el carrito de compras¡¡¡¡',
+
+    });
     cerrarCarrito()
   }
-})
+}
+);
+
+//usando la libreria
+
+let cerrado = document.getElementById("cerrado");
+cerrado.addEventListener("click", () => {
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "Seguro que quiere cerrar el carrito",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si,cerrar!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire(
+        'Cerrado!',
+      )
+      cerrarCarrito();
+    } else {
+      return;
+    }
+  })
+});
+
+
+// agregando al carrito con libreria
+let agregar = document.getElementById("agregarProducto");
+agregar.addEventListener("click", () => {
+  
+  Swal.fire({
+    title: 'Do you want to save the changes?',
+    showDenyButton: true,
+    showCancelButton: true,
+    confirmButtonText: 'Save',
+    denyButtonText: `Don't save`,
+  }).then((result) => {
+    /* Read more about isConfirmed, isDenied below */
+    if (result.isConfirmed) {
+      Swal.fire('Saved!', '', 'success')
+    } else if (result.isDenied) {
+      Swal.fire('Changes are not saved', '', 'info')
+    }
+  })
+});
+
+
 
 function obtenerCarritoHtml() {
   return document.getElementById("carrito");
@@ -134,7 +189,7 @@ function verDetalleProducto(idProducto, tipo = "B") {
                           <div class="contenedor-modal-descripcion">
                             <div class="contenedor-modal-opciones">
                               <span>Precio S/precioProducto</span>
-                              <button onclick="agregarAlCarrito(idProducto,tipo)">Agregar al Carrito</button>
+                              <button onclick="agregarAlCarrito(idProducto,tipo)" id="agregarProducto">Agregar al Carrito</button>
                             </div>
                             <p>
                               descripcionProducto
@@ -262,6 +317,8 @@ function agregarAlCarrito(idProducto, tipo = "B") {
   validarCarrito(carrito);
 }
 
+
+
 function eliminarItem(idProducto) {
 
   const carrito = obtenerCarrito();
@@ -276,3 +333,4 @@ function eliminarItem(idProducto) {
   localStorage.setItem(claveLocalStorage, JSON.stringify(carrito));
   validarCarrito(carrito);
 }
+
