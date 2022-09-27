@@ -1,5 +1,49 @@
-const { bocaditos } = {
+const { bocaditos, tortas } = {
   bocaditos: [
+    {
+      id: 1,
+      name: "Bocadito de Matrimonio",
+      precio: 2,
+      imagen: "./assest/bocadito3.webp",
+      descripcion: "Manzana acaramelda con diseño para novio",
+    },
+    {
+      id: 2,
+      name: "Bocaditos dulces variados",
+      precio: 0.8,
+      imagen: "./assest/bocadito4.jpg",
+      descripcion: "Alfajores rellenos de manjar, brownie de chocolate",
+    },
+    {
+      id: 3,
+      name: "Empanada dulce",
+      precio: 1,
+      imagen: "./assest/bocadito5.jpg",
+      descripcion: "Empanadas relleno de dulce al escoger por el cliente",
+    },
+    {
+      id: 4,
+      name: "Beso de moza",
+      precio: 1,
+      imagen: "./assest/bocadito6.jpg",
+      descripcion: "Hecho a base de chocolate y relleno de dulce de huevo, y base de galleta.",
+    },
+    {
+      id: 5,
+      name: "Minis alfajores",
+      precio: 0.8,
+      imagen: "./assest/bocadito7.jpg",
+      descripcion: "Mini alfajores relleno con manjar blanco a base de leche",
+    },
+    {
+      id: 6,
+      name: "Chupetines en vaso",
+      precio: 1.5,
+      imagen: "./assest/bocadito8.jpg",
+      descripcion: "Chupetines de chocolate con vainilla",
+    },
+  ],
+  tortas: [
     {
       id: 1,
       name: "Bocadito de Matrimonio",
@@ -132,29 +176,6 @@ cerrado.addEventListener("click", () => {
   })
 });
 
-
-// agregando al carrito con libreria
-let agregar = document.getElementById("agregarProducto");
-agregar.addEventListener("click", () => {
-  
-  Swal.fire({
-    title: 'Do you want to save the changes?',
-    showDenyButton: true,
-    showCancelButton: true,
-    confirmButtonText: 'Save',
-    denyButtonText: `Don't save`,
-  }).then((result) => {
-    /* Read more about isConfirmed, isDenied below */
-    if (result.isConfirmed) {
-      Swal.fire('Saved!', '', 'success')
-    } else if (result.isDenied) {
-      Swal.fire('Changes are not saved', '', 'info')
-    }
-  })
-});
-
-
-
 function obtenerCarritoHtml() {
   return document.getElementById("carrito");
 }
@@ -209,6 +230,7 @@ function verDetalleProducto(idProducto, tipo = "B") {
       .replace("descripcionProducto", bocadito.descripcion);
   } else if (tipo == "T") {
     // PONER ACA PARA TORTAS
+
   }
 
 }
@@ -260,6 +282,7 @@ function validarCarrito(carritoObj) {
     </div>
   </div>`;
 
+
   for (const producto of carrito.productos) {
     let item = template;
     item = item
@@ -278,59 +301,94 @@ function validarCarrito(carritoObj) {
 validarCarrito();
 
 function agregarAlCarrito(idProducto, tipo = "B") {
-  const carrito = obtenerCarrito();
-  if (tipo === "B") {
-    const bocadito = bocaditos.find((x) => x.id == idProducto);
-    const existeBocadito = carrito.productos.find((x) => x.id == bocadito.id);
-    if (existeBocadito) {
-      existeBocadito.cantidad += 1;
-    } else {
-      carrito.productos.push({
-        id: bocadito.id,
-        name: bocadito.name,
-        cantidad: 1,
-        precio: bocadito.precio,
-        imagen: bocadito.imagen,
-      });
-    }
-  } else if (tipo === "T") {
-    const torta = tortas.find((x) => x.id == idProducto);
-    const existetorta = carrito.productos.find((x) => x.id == torta.id);
-    if (existetorta) {
-      existetorta.cantidad += 1;
-    } else {
-      carrito.productos.push({
-        id: torta.id,
-        name: torta.name,
-        cantidad: 1,
-        precio: torta.precio,
-        imagen: torta.imagen,
-      });
-    }
-  }
-  carrito.total = 0
-  for (const producto of carrito.productos) {
-    carrito.total += producto.precio * producto.cantidad;
-  }
 
-  localStorage.setItem(claveLocalStorage, JSON.stringify(carrito));
-  validarCarrito(carrito);
+  Swal.fire({
+    title: '¿Esta seguro de agregar el producto?',
+    showDenyButton: true,
+    showCancelButton: false,
+    confirmButtonText: 'Agregar',
+    denyButtonText: "No agregar",
+  }).then((result) => {
+    /* Read more about isConfirmed, isDenied below */
+    if (result.isConfirmed) {
+
+      const carrito = obtenerCarrito();
+      if (tipo === "B") {
+        const bocadito = bocaditos.find((x) => x.id == idProducto);
+        const existeBocadito = carrito.productos.find((x) => x.id == bocadito.id);
+        if (existeBocadito) {
+          existeBocadito.cantidad += 1;
+        } else {
+          carrito.productos.push({
+            id: bocadito.id,
+            name: bocadito.name,
+            cantidad: 1,
+            precio: bocadito.precio,
+            imagen: bocadito.imagen,
+          });
+        }
+      } else if (tipo === "T") {
+        const torta = tortas.find((x) => x.id == idProducto);
+        const existetorta = carrito.productos.find((x) => x.id == torta.id);
+        if (existetorta) {
+          existetorta.cantidad += 1;
+        } else {
+          carrito.productos.push({
+            id: torta.id,
+            name: torta.name,
+            cantidad: 1,
+            precio: torta.precio,
+            imagen: torta.imagen,
+          });
+        }
+      }
+      carrito.total = 0
+      for (const producto of carrito.productos) {
+        carrito.total += producto.precio * producto.cantidad;
+      }
+
+      localStorage.setItem(claveLocalStorage, JSON.stringify(carrito));
+      validarCarrito(carrito);
+
+      Swal.fire('Producto agregado al carrito!', '', 'success')
+    } else if (result.isDenied) {
+      Swal.fire('El producto no se agregó', '', 'info')
+    }
+  })
+
+
 }
 
 
 
 function eliminarItem(idProducto) {
 
-  const carrito = obtenerCarrito();
-  if (!carrito.productos || carrito.productos.length === 0) return;
+  Swal.fire({
+    title: '¿Está seguro de eliminar el producto del carrito?',
+    icon: "warning",
+    showDenyButton: true,
+    showCancelButton: false,
+    confirmButtonText: 'Sí',
+    denyButtonText: "No",
+  }).then((result) => {
+    /* Read more about isConfirmed, isDenied below */
+    if (result.isConfirmed) {
+      const carrito = obtenerCarrito();
+      if (!carrito.productos || carrito.productos.length === 0) return;
 
-  carrito.productos = carrito.productos.filter(x => x.id != idProducto)
-  carrito.total = 0
-  for (const producto of carrito.productos) {
-    carrito.total += producto.precio * producto.cantidad;
-  }
+      carrito.productos = carrito.productos.filter(x => x.id != idProducto)
+      carrito.total = 0
+      for (const producto of carrito.productos) {
+        carrito.total += producto.precio * producto.cantidad;
+      }
 
-  localStorage.setItem(claveLocalStorage, JSON.stringify(carrito));
-  validarCarrito(carrito);
+      localStorage.setItem(claveLocalStorage, JSON.stringify(carrito));
+      validarCarrito(carrito);
+
+      Swal.fire('Producto eliminado del carrito', '', 'success')
+    } else if (result.isDenied) {
+      Swal.fire('El producto no se eliminó', '', 'info')
+    }
+  })
 }
 
