@@ -1,97 +1,12 @@
-const { bocaditos, tortas } = {
-  bocaditos: [
-    {
-      id: 1,
-      name: "Bocadito de Matrimonio",
-      precio: 2,
-      imagen: "./assest/bocadito3.webp",
-      descripcion: "Manzana acaramelda con diseño para novio",
-    },
-    {
-      id: 2,
-      name: "Bocaditos dulces variados",
-      precio: 0.8,
-      imagen: "./assest/bocadito4.jpg",
-      descripcion: "Alfajores rellenos de manjar, brownie de chocolate",
-    },
-    {
-      id: 3,
-      name: "Empanada dulce",
-      precio: 1,
-      imagen: "./assest/bocadito5.jpg",
-      descripcion: "Empanadas relleno de dulce al escoger por el cliente",
-    },
-    {
-      id: 4,
-      name: "Beso de moza",
-      precio: 1,
-      imagen: "./assest/bocadito6.jpg",
-      descripcion: "Hecho a base de chocolate y relleno de dulce de huevo, y base de galleta.",
-    },
-    {
-      id: 5,
-      name: "Minis alfajores",
-      precio: 0.8,
-      imagen: "./assest/bocadito7.jpg",
-      descripcion: "Mini alfajores relleno con manjar blanco a base de leche",
-    },
-    {
-      id: 6,
-      name: "Chupetines en vaso",
-      precio: 1.5,
-      imagen: "./assest/bocadito8.jpg",
-      descripcion: "Chupetines de chocolate con vainilla",
-    },
-  ],
-  tortas: [
-    {
-      id: 1,
-      name: "Bocadito de Matrimonio",
-      precio: 2,
-      imagen: "./assest/bocadito3.webp",
-      descripcion: "Manzana acaramelda con diseño para novio",
-    },
-    {
-      id: 2,
-      name: "Bocaditos dulces variados",
-      precio: 0.8,
-      imagen: "./assest/bocadito4.jpg",
-      descripcion: "Alfajores rellenos de manjar, brownie de chocolate",
-    },
-    {
-      id: 3,
-      name: "Empanada dulce",
-      precio: 1,
-      imagen: "./assest/bocadito5.jpg",
-      descripcion: "Empanadas relleno de dulce al escoger por el cliente",
-    },
-    {
-      id: 4,
-      name: "Beso de moza",
-      precio: 1,
-      imagen: "./assest/bocadito6.jpg",
-      descripcion: "Hecho a base de chocolate y relleno de dulce de huevo, y base de galleta.",
-    },
-    {
-      id: 5,
-      name: "Minis alfajores",
-      precio: 0.8,
-      imagen: "./assest/bocadito7.jpg",
-      descripcion: "Mini alfajores relleno con manjar blanco a base de leche",
-    },
-    {
-      id: 6,
-      name: "Chupetines en vaso",
-      precio: 1.5,
-      imagen: "./assest/bocadito8.jpg",
-      descripcion: "Chupetines de chocolate con vainilla",
-    },
-  ],
-};
-
 const claveLocalStorage = "carrito";
 
-function mostrarBocaditos() {
+const obtenerBocaditosJSON = async () => {
+  const response = await fetch('assest/json/bocaditos.json')
+  const data = await response.json()
+  return data
+}
+
+async function mostrarBocaditos() {
   const contenedorBocaditos = document.getElementById("contenedor-bocaditos");
 
   if (!contenedorBocaditos) return;
@@ -112,6 +27,8 @@ function mostrarBocaditos() {
       </div>`;
 
   const bocaditosAMostrar = [];
+
+  const { bocaditos } = await obtenerBocaditosJSON()
 
   for (const bocadito of bocaditos) {
     let bocaditoAux = plantillaHtml;
@@ -201,7 +118,7 @@ function cerrarCarrito() {
   carrito.className = "carrito";
 }
 
-function verDetalleProducto(idProducto, tipo = "B") {
+async function verDetalleProducto(idProducto, tipo = "B") {
   const titleModal = document.getElementById("modalProductoLabel");
   const bodyModal = document.getElementById("modalProductoBody");
 
@@ -218,6 +135,8 @@ function verDetalleProducto(idProducto, tipo = "B") {
                           </div>
                         </div>`;
 
+
+  const { bocaditos } = await obtenerBocaditosJSON()
 
   if (tipo === "B") {
     const bocadito = bocaditos.find((x) => x.id === idProducto);
@@ -300,7 +219,10 @@ function validarCarrito(carritoObj) {
 
 validarCarrito();
 
-function agregarAlCarrito(idProducto, tipo = "B") {
+async function agregarAlCarrito(idProducto, tipo = "B") {
+
+
+  const { bocaditos, tortas } = await obtenerBocaditosJSON()
 
   Swal.fire({
     title: '¿Esta seguro de agregar el producto?',
@@ -355,14 +277,11 @@ function agregarAlCarrito(idProducto, tipo = "B") {
       Swal.fire('El producto no se agregó', '', 'info')
     }
   })
-
-
 }
 
 
 
-function eliminarItem(idProducto) {
-
+async function eliminarItem(idProducto) {
   Swal.fire({
     title: '¿Está seguro de eliminar el producto del carrito?',
     icon: "warning",
