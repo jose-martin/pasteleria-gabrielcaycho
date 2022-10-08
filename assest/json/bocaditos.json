@@ -46,45 +46,33 @@
   "tortas": [
     {
       "id": 1,
-      "name": "Bocadito de Matrimonio",
+      "name": "Torta Helada",
       "precio": 2,
-      "imagen": "./assest/bocadito3.webp",
+      "imagen": "./assest/torta2.webp",
       "descripcion": "Manzana acaramelda con diseño para novio"
     },
     {
       "id": 2,
-      "name": "Bocaditos dulces variados",
+      "name": "tartaletas de fresa y manzana",
       "precio": 0.8,
-      "imagen": "./assest/bocadito4.jpg",
+      "imagen": "./assest/torta-matri3.jpg",
       "descripcion": "Alfajores rellenos de manjar, brownie de chocolate"
     },
     {
       "id": 3,
-      "name": "Empanada dulce",
+      "name": "Torta decorativa",
       "precio": 1,
-      "imagen": "./assest/bocadito5.jpg",
+      "imagen": "./assest/torts1.jfif",
       "descripcion": "Empanadas relleno de dulce al escoger por el cliente"
     },
     {
       "id": 4,
-      "name": "Beso de moza",
+      "name": "Torta de pollo y mayonesa",
       "precio": 1,
-      "imagen": "./assest/bocadito6.jpg",
+      "imagen": "./assest/torta-matri2.jpg",
       "descripcion": "Hecho a base de chocolate y relleno de dulce de huevo, y base de galleta."
-    },
-    {
-      "id": 5,
-      "name": "Minis alfajores",
-      "precio": 0.8,
-      "imagen": "./assest/bocadito7.jpg",
-      "descripcion": "Mini alfajores relleno con manjar blanco a base de leche"
-    },
-    {
-      "id": 6,
-      "name": "Chupetines en vaso",
-      "precio": 1.5,
-      "imagen": "./assest/bocadito8.jpg",
-      "descripcion": "Chupetines de chocolate con vainilla"
     }
+    
+    
   ]
 }

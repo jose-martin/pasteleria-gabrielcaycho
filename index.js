@@ -6,6 +6,19 @@ const obtenerBocaditosJSON = async () => {
   return data
 }
 
+ let tortas1=document.getElementById("tortas");
+
+// for(const torta of tortas){
+
+ tortas1.innerHTML=`<img src="./assest/torta2.webp" alt="tortas" />
+                  <img src="./assest/torta-matri3.jpg" alt="tortas" />
+                  <img src="./assest/torts1.jfif" alt="tortas" />
+             <img src="./assest/torta-matri2.jpg" alt="tortas" />`
+                  
+
+ tortas1.append();
+ //}
+
 async function mostrarBocaditos() {
   const contenedorBocaditos = document.getElementById("contenedor-bocaditos");
 
