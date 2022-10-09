@@ -137,6 +137,43 @@
   row-gap: 2rem;
 }
 
+.contenedor-tortas {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4rem;
+  margin-top: 3rem;
+  row-gap: 2rem;
+}
+
+.contenedor-tortas1 {
+  display: flex;
+  width: 250px;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.contenedor-tortas1 .contenedor-tortas-imagen {
+  display: flex;
+  flex-direction: column;
+}
+
+.contenedor-tortas1 .contenedor-tortas-imagen button {
+  border: none;
+  background-color: red;
+  color: white;
+  font-weight: bold;
+}
+
+.contenedor-tortas1 img {
+  width: 150px;
+  height: 130px;
+}
+
+.contenedor-tortas1 p {
+  font-weight: 600;
+  font-size: 20px;
+}
+
 .contenedor-bocaditos1 {
   display: flex;
   width: 250px;

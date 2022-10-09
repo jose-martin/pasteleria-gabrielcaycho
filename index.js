@@ -1,23 +1,19 @@
 const claveLocalStorage = "carrito";
 
-const obtenerBocaditosJSON = async () => {
+const obtenerJSON = async () => {
   const response = await fetch('assest/json/bocaditos.json')
   const data = await response.json()
   return data
 }
 
- let tortas1=document.getElementById("tortas");
-
-// for(const torta of tortas){
-
- tortas1.innerHTML=`<img src="./assest/torta2.webp" alt="tortas" />
-                  <img src="./assest/torta-matri3.jpg" alt="tortas" />
-                  <img src="./assest/torts1.jfif" alt="tortas" />
-             <img src="./assest/torta-matri2.jpg" alt="tortas" />`
-                  
-
- tortas1.append();
- //}
+const obtenerBocaditosJSON = async () => {
+  const { bocaditos } = await obtenerJSON()
+  return bocaditos
+}
+const obtenerTortasJSON = async () => {
+  const { tortas } = await obtenerJSON()
+  return tortas
+}
 
 async function mostrarBocaditos() {
   const contenedorBocaditos = document.getElementById("contenedor-bocaditos");
@@ -41,7 +37,7 @@ async function mostrarBocaditos() {
 
   const bocaditosAMostrar = [];
 
-  const { bocaditos } = await obtenerBocaditosJSON()
+  const bocaditos = await obtenerBocaditosJSON()
 
   for (const bocadito of bocaditos) {
     let bocaditoAux = plantillaHtml;
@@ -66,6 +62,53 @@ async function mostrarBocaditos() {
 }
 
 mostrarBocaditos();
+
+async function mostrarTortas() {
+  const contenedorTortas = document.getElementById("contenedor-tortas");
+
+  if (!contenedorTortas) return;
+
+  const plantillaHtml = `<div class="contenedor-tortas1">
+        <div class="contenedor-tortas-imagen">
+          <img src="urlTorta" alt="" />
+          <button
+            type="button"
+            onclick="verDetalleProducto(idProducto,tipo)"
+            data-bs-toggle="modal"
+            data-bs-target="#modalProducto"
+          >
+            Ver detalle
+          </button>
+        </div>
+        <p>nombreTorta S/. precioTorta c/u</p>
+      </div>`;
+
+  const tortasAMostrar = [];
+
+  const tortas = await obtenerTortasJSON()
+
+  for (const torta of tortas) {
+    let tortaAux = plantillaHtml;
+    tortaAux = tortaAux.replace("urlTorta", torta.imagen);
+    tortaAux = tortaAux.replace("nombreTorta", torta.name);
+    tortaAux = tortaAux.replace(
+      "idProducto",
+      torta.id
+    );
+    tortaAux = tortaAux.replace(
+      "tipo",
+      `'T'`
+    );
+    tortaAux = tortaAux.replace(
+      "precioTorta",
+      torta.precio.toFixed(2)
+    );
+    tortasAMostrar.push(tortaAux);
+  }
+
+  contenedorTortas.innerHTML = tortasAMostrar.join("");
+}
+mostrarTortas()
 
 // Evento para cerrar el carrito
 document.addEventListener("keyup", (event) => {
@@ -149,9 +192,9 @@ async function verDetalleProducto(idProducto, tipo = "B") {
                         </div>`;
 
 
-  const { bocaditos } = await obtenerBocaditosJSON()
 
   if (tipo === "B") {
+    const bocaditos = await obtenerBocaditosJSON()
     const bocadito = bocaditos.find((x) => x.id === idProducto);
     titleModal.innerHTML = bocadito.name;
     bodyModal.innerHTML = plantillaHtml
@@ -161,8 +204,15 @@ async function verDetalleProducto(idProducto, tipo = "B") {
       .replace("tipo", `'${tipo}'`)
       .replace("descripcionProducto", bocadito.descripcion);
   } else if (tipo == "T") {
-    // PONER ACA PARA TORTAS
-
+    const tortas = await obtenerTortasJSON()
+    const torta = tortas.find((x) => x.id === idProducto);
+    titleModal.innerHTML = torta.name;
+    bodyModal.innerHTML = plantillaHtml
+      .replace("imagenProducto", torta.imagen)
+      .replace("precioProducto", torta.precio.toFixed(2))
+      .replace("idProducto", torta.id)
+      .replace("tipo", `'${tipo}'`)
+      .replace("descripcionProducto", torta.descripcion);
   }
 
 }
@@ -235,7 +285,8 @@ validarCarrito();
 async function agregarAlCarrito(idProducto, tipo = "B") {
 
 
-  const { bocaditos, tortas } = await obtenerBocaditosJSON()
+  const bocaditos = await obtenerBocaditosJSON()
+  const tortas = await obtenerTortasJSON()
 
   Swal.fire({
     title: '¿Esta seguro de agregar el producto?',
