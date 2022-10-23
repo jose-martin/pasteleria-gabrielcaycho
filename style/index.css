@@ -297,7 +297,7 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
 
 .carrito-body .eliminarItem {

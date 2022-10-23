@@ -47,32 +47,30 @@
     {
       "id": 1,
       "name": "Torta Helada",
-      "precio": 2,
+      "precio": 60,
       "imagen": "./assest/torta2.webp",
-      "descripcion": "Manzana acaramelda con diseño para novio"
+      "descripcion": "Torta a base de keke y gelatina"
     },
     {
       "id": 2,
-      "name": "tartaletas de fresa y manzana",
-      "precio": 0.8,
+      "name": "Torta de matrimonio",
+      "precio": 1200,
       "imagen": "./assest/torta-matri3.jpg",
-      "descripcion": "Alfajores rellenos de manjar, brownie de chocolate"
+      "descripcion": "Torta de matrimonio elegante de 5 kg"
     },
     {
       "id": 3,
       "name": "Torta decorativa",
-      "precio": 1,
+      "precio": 80,
       "imagen": "./assest/torts1.jfif",
-      "descripcion": "Empanadas relleno de dulce al escoger por el cliente"
+      "descripcion": "Tortas tematicas"
     },
     {
       "id": 4,
-      "name": "Torta de pollo y mayonesa",
-      "precio": 1,
+      "name": "Torta de matrimonio pequeña",
+      "precio": 500,
       "imagen": "./assest/torta-matri2.jpg",
-      "descripcion": "Hecho a base de chocolate y relleno de dulce de huevo, y base de galleta."
+      "descripcion": "Torta decorativa tematica"
     }
-    
-    
   ]
 }
